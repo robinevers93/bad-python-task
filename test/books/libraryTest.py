@@ -9,15 +9,15 @@ class TestLibraryService(unittest.TestCase):
         self.db2 = AuthorDatabase()
         self.libService = LibraryService(self.db, self.db2)
 
-        self.a1: Author = Author("Jack Smith")
-        self.a2: Author = Author("George Woods")
+        self.a1: Author = Author("a1", "Jack Smith")
+        self.a2: Author = Author("a2", "George Woods")
 
         self.db2.add(self.a1)
         self.db2.add(self.a2)
 
-        self.book1: Book = Book("foo", self.a1, "Action Comedy", 10)
-        self.book2: Book = Book("foo", self.a2, "Horror", 100)
-        self.book3: Book = Book("bar", self.a1, "Horror", 140)
+        self.book1: Book = Book("book1", "foo", self.a1, "Action Comedy", 10)
+        self.book2: Book = Book("book2", "foo", self.a2, "Horror", 100)
+        self.book3: Book = Book("book3", "bar", self.a1, "Horror", 140)
 
         self.db.add(self.book1)
         self.db.add(self.book2)
@@ -45,12 +45,12 @@ class TestLibraryService(unittest.TestCase):
                          sum(book.pages for book in [self.book1, self.book3]))
 
     def test_addBookToAuthor_none(self):
-        a3 = Author("Nemo")
-        self.assertIsNone(self.libService.add_book(Book("title", a3, "Romance", 1)))
+        a3 = Author("a3", "Nemo")
+        self.assertIsNone(self.libService.add_book(Book("book4", "title", a3, "Romance", 1)))
 
     def test_addBookToAuthor_some(self):
-        author: Author = Author("George Woods")
-        book: Book = Book("title", author, "Romance", 1)
+        author: Author = Author("a2", "George Woods")
+        book: Book = Book("book4", "title", author, "Romance", 1)
         self.assertEqual(self.libService.add_book(book), book)
 
     def test_AuthorDatabase_getByName_none(self):
