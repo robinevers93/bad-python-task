@@ -1,8 +1,6 @@
-from typing import List
-
-from src.search.search import DocumentDatabase, search_documents, SimilarityScore
 import unittest
 
+from src.search.search import DocumentDatabase, search_documents, SimilarityScore
 from src.search.utils import print_results
 
 
@@ -19,8 +17,9 @@ class TestSearchImplementation(unittest.TestCase):
         print_results(results, self.db)
 
         # Validate: doc1 and doc2 should be ranked highly
-        doc1_success = "doc1" in [doc_id for doc_id, _ in results[:2]]
-        doc2_success = "doc2" in [doc_id for doc_id, _ in results[:2]]
+        highly_ranked = [document.document_id for document in results[:2]]
+        doc1_success = "doc1" in highly_ranked
+        doc2_success = "doc2" in highly_ranked
 
         self.assertTrue(doc1_success, "doc1 should be ranked highly")
         self.assertTrue(doc2_success, "doc2 should be ranked highly")
@@ -33,8 +32,9 @@ class TestSearchImplementation(unittest.TestCase):
         print_results(results, self.db)
 
         # Validate: doc3 and doc4 should be ranked highly
-        doc3_success = "doc3" in [doc_id for doc_id, _ in results[:2]]
-        doc4_success = "doc4" in [doc_id for doc_id, _ in results[:2]]
+        highly_ranked = [document.document_id for document in results[:2]]
+        doc3_success = "doc3" in highly_ranked
+        doc4_success = "doc4" in highly_ranked
 
         self.assertTrue(doc3_success, "doc3 should be ranked highly")
         self.assertTrue(doc4_success, "doc4 should be ranked highly")
